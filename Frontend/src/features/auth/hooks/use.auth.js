@@ -1,8 +1,8 @@
 //this is managing state and api layer
 
-import { useContext,useEffect,useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../auth.context";
-import {login,register,logout,getMe} from "../services/auth.api";
+import {login,register,logout} from "../services/auth.api";
 
 export const useAuth = () => {
     const context = useContext(AuthContext)
@@ -13,9 +13,11 @@ export const useAuth = () => {
             try{
                 const data = await login({email,password})
                 //state management
-                setUser(data.user)
+                setUser(data?.user ?? null)
+                return true
             }catch(err){
-                console.log(err)
+                console.error(err)
+                return false
             }finally{
                 //state management
                 setLoading(false)
@@ -27,9 +29,11 @@ export const useAuth = () => {
         setLoading(true)
         try{
             const data = await register({username,email,password})
-            setUser(data.user)
+            setUser(data?.user ?? null)
+            return true
         }catch(err){
-            console.log(err)
+            console.error(err)
+            return false
         }finally{
 
             setLoading(false)
@@ -40,31 +44,16 @@ export const useAuth = () => {
     const handleLogout = async () => {
         setLoading(true)
         try{
-            const data = await logout()
+            await logout()
             setUser(null)
+            return true
         }catch(err){
-
+            console.error(err)
+            return false
         }finally{
             setLoading(false)
         }
     }
-
-    useEffect(()=>{
-        const getAndSetUser = async()=>{
-            //current loggedin user ka data aayega from cookies stored in browser
-            try{
-                const data = await getMe()
-                setUser(data.user)
-
-            }catch(err){
-
-            }finally{
-                setLoading(false)
-            }
-        }
-
-        getAndSetUser()
-    },[])
 
     //api layer se data (response aa rha hai)
     return { user, loading, handleRegister, handleLogin, handleLogout }

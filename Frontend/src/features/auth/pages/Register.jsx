@@ -102,8 +102,10 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await handleRegister({ username, email, password })
-        navigate("/home")
+        const isRegistered = await handleRegister({ username, email, password })
+        if (isRegistered) {
+            navigate("/home")
+        }
     }
 
     if (loading) {
@@ -135,6 +137,7 @@ const Register = () => {
                                 type="text"
                                 id="username"
                                 name="username"
+                                autoComplete="username"
                                 placeholder="Enter your name"
                                 required
                                 value={username}
@@ -148,6 +151,7 @@ const Register = () => {
                                 type="email"
                                 id="email"
                                 name="email"
+                                autoComplete="email"
                                 placeholder="you@example.com"
                                 required
                                 value={email}
@@ -161,6 +165,7 @@ const Register = () => {
                                 type="password"
                                 id="password"
                                 name="password"
+                                autoComplete="new-password"
                                 placeholder="••••••••"
                                 required
                                 value={password}

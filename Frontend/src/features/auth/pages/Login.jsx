@@ -101,8 +101,10 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await handleLogin({ email, password })
-        navigate('/home')
+        const isLoggedIn = await handleLogin({ email, password })
+        if (isLoggedIn) {
+            navigate('/home')
+        }
     }
 
     if (loading) {
@@ -135,6 +137,7 @@ const Login = () => {
                                 type="email"
                                 id="email"
                                 name="email"
+                                autoComplete="email"
                                 placeholder="you@example.com"
                                 required
                                 value={email}
@@ -151,6 +154,7 @@ const Login = () => {
                                 type="password"
                                 id="password"
                                 name="password"
+                                autoComplete="current-password"
                                 placeholder="••••••••"
                                 required
                                 value={password}
