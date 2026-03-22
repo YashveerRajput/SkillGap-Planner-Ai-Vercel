@@ -1,0 +1,22 @@
+.button{
+    border: none;
+    outline: none;
+    padding-inline: 1.5rem;
+    padding-block: 0.75rem;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    //smooth transition
+    transition: all 0.3s ease-in-out;
+
+    &.primary-button{
+        background-color: rgba(0, 255, 60, 0.622);
+        color: white;
+        font-weight: 600;
+        font-size: large;
+    }
+
+    &:active{
+        transform: scale(0.9);
+    }
+}
