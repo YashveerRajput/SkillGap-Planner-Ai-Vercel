@@ -32,8 +32,12 @@ MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_strong_jwt_secret
 GOOGLE_GENAI_API_KEY=your_google_genai_api_key
 NODE_ENV=production
-CORS_ORIGIN=https://your-frontend-app.vercel.app,http://localhost:5173
+CORS_ORIGIN=https://your-frontend-app.vercel.app,https://*.vercel.app,http://localhost:5173
 ```
+
+Notes:
+- Do not add trailing slashes in `CORS_ORIGIN` values.
+- Keep `https://*.vercel.app` if you use preview deployments.
 
 ### C. Deploy
 
@@ -69,7 +73,7 @@ After frontend deploy, update backend env var `CORS_ORIGIN` with your real front
 Recommended value format:
 
 ```bash
-CORS_ORIGIN=https://your-frontend-app.vercel.app,http://localhost:5173
+CORS_ORIGIN=https://your-frontend-app.vercel.app,https://*.vercel.app,http://localhost:5173
 ```
 
 ## 5) Cookie/Auth Notes

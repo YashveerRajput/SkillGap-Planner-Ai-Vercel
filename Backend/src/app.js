@@ -15,11 +15,43 @@ const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
     .map((origin) => origin.trim())
     .filter(Boolean)
 
+const normalizeOrigin = (origin) => origin.replace(/\/$/, "")
+
+const exactAllowedOrigins = new Set(
+    allowedOrigins
+        .filter((origin) => !origin.includes("*"))
+        .map(normalizeOrigin)
+)
+
+const wildcardAllowedOrigins = allowedOrigins
+    .filter((origin) => origin.includes("*"))
+    .map((pattern) => {
+        const escaped = pattern
+            .replace(/[.+?^${}()|[\]\\]/g, "\\$&")
+            .replace(/\*/g, ".*")
+
+        return new RegExp(`^${escaped.replace(/\/$/, "")}$`)
+    })
+
+function isOriginAllowed(origin) {
+    const normalizedOrigin = normalizeOrigin(origin)
+
+    if (exactAllowedOrigins.has(normalizedOrigin)) {
+        return true
+    }
+
+    return wildcardAllowedOrigins.some((pattern) => pattern.test(normalizedOrigin))
+}
+
 app.use(cors({
     origin: (origin, callback) => {
         // Allow server-to-server calls and local tools that do not send Origin header.
         if (!origin) return callback(null, true)
-        if (allowedOrigins.includes(origin)) return callback(null, true)
+
+        if (isOriginAllowed(origin)) {
+            return callback(null, true)
+        }
+
         return callback(new Error("Not allowed by CORS"))
     },
     credentials:true
