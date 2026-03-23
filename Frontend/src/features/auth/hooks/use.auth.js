@@ -16,7 +16,6 @@ export const useAuth = () => {
                 setUser(data?.user ?? null)
                 return true
             }catch(err){
-                console.error(err)
                 return false
             }finally{
                 //state management
@@ -32,7 +31,6 @@ export const useAuth = () => {
             setUser(data?.user ?? null)
             return true
         }catch(err){
-            console.error(err)
             return false
         }finally{
 
@@ -48,7 +46,6 @@ export const useAuth = () => {
             setUser(null)
             return true
         }catch(err){
-            console.error(err)
             return false
         }finally{
             setLoading(false)

@@ -12,7 +12,7 @@ app.use(cookieParser())
 
 const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
     .split(",")
-    .map((origin) => origin.trim())
+    .map((origin) => origin.trim().replace(/^['\"]|['\"]$/g, ""))
     .filter(Boolean)
 
 const normalizeOrigin = (origin) => origin.replace(/\/$/, "")
@@ -43,12 +43,21 @@ function isOriginAllowed(origin) {
     return wildcardAllowedOrigins.some((pattern) => pattern.test(normalizedOrigin))
 }
 
+function isVercelPreviewOrigin(origin) {
+    return /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin)
+}
+
 app.use(cors({
     origin: (origin, callback) => {
         // Allow server-to-server calls and local tools that do not send Origin header.
         if (!origin) return callback(null, true)
 
         if (isOriginAllowed(origin)) {
+            return callback(null, true)
+        }
+
+        // Safe fallback for Vercel preview + production frontend domains.
+        if (process.env.VERCEL && isVercelPreviewOrigin(origin)) {
             return callback(null, true)
         }
 
