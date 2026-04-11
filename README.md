@@ -5,6 +5,7 @@ SkillGap Planner AI is a full-stack web application that helps users assess inte
 ## Live Demo
 
 - Vercel Demo: https://skill-gap-planner-ai-vercel-rphr.vercel.app/
+- Loom Video Tutorial - https://www.loom.com/share/0efd7c177d6243ffa24641011ac14daa
 
 ## Project Structure
 
