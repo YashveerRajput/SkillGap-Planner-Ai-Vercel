@@ -14,25 +14,16 @@ SkillGap Planner AI is a full-stack web application that helps users assess inte
 
 ## Core Features
 
--Helps in identifying skill-gaps according to job role
-
--Produces current role-resume matching score
-
--Generates domain-specific interview questions
-
--Generates behavioural questions for HR interview
-
--Generates day - wise preparation plan 
-
--AI-powered interview report generation
-
--Personalized resume PDF generation
-
--User authentication (register/login/logout)
-
--Protected user flows with token/cookie-based auth
-
--Interview history and report retrieval
+Helps in identifying skill-gaps according to job role
+Produces current role-resume matching score
+Generates domain-specific interview questions
+Generates behavioural questions for HR interview
+Generates day - wise preparation plan 
+AI-powered interview report generation
+Personalized resume PDF generation
+User authentication (register/login/logout)
+Protected user flows with token/cookie-based auth
+Interview history and report retrieval
 
 
 ## Tech Stack
